@@ -28,3 +28,5 @@ obj/
 _ReSharper*/
 [Tt]est[Rr]esult*
 node_modules/
+SignalRServer/.vs/SignalRServer/v15/Server/sqlite3/storage.ide-shm
+SignalRServer/.vs/SignalRServer/v15/Server/sqlite3/storage.ide-wal
