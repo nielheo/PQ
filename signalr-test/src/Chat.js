@@ -11,7 +11,7 @@ class Chat extends Component {
     super(props);
     
     this.state = {
-      nick: '',
+      nick: 'PQ',
       message: '',
       messages: [],
       hubConnection: null,
@@ -37,8 +37,10 @@ class Chat extends Component {
   }
 
   componentDidMount () {
-    const nick = window.prompt('Your name:', 'John');
-    let hubConnection = new  HubConnection(ChatUrl, { transport: signalR.TransportType.LongPolling });
+    const nick = "PQ";
+    let hubConnection = new  HubConnection(ChatUrl, { 
+      transport: signalR.TransportType.LongPolling
+    });
 
     this.setState({ hubConnection, nick }, () => {
       this.state.hubConnection
@@ -58,11 +60,7 @@ class Chat extends Component {
     return (
         <div>
           <br />
-          <input
-            type="text"
-            value={this.state.message}
-            onChange={e => this.setState({ message: e.target.value })}
-          />
+         
     
           <button onClick={this.sendMultipleRequest}>Send Multiple Request</button>
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace SignalRServer
 {
+    [EnableCors("CorsPolicy")]
     public class ChatHub : Hub
     {
         private int minDelay = 5;
@@ -17,19 +19,19 @@ namespace SignalRServer
             var r = new Random().Next(minDelay, maxDelay);
             return r * 1000;
         }
-        
-        private async Task SendSingle(string name, string message)
+
+        public async Task SendSingle(string name, string message)
         {
             var msg = message + "|" + DateTime.Now.ToString("HH:mm:ss.ms");
             await Task.Run(() => SendSingleArray(name, msg));
         }
 
-        public void SendSingleArray(string name, string message)
+        private async Task SendSingleArray(string name, string message)
         {
             message += "|" + DateTime.Now.ToString("HH:mm:ss.ms");
-            Thread.Sleep(getRandomDelayTime());
+            await Task.Delay(getRandomDelayTime());
             message += "|" + DateTime.Now.ToString("HH:mm:ss.ms");
-            Clients.All.InvokeAsync("sendToAll", name, message);
+            await Clients.All.InvokeAsync("sendToAll", name, message);
         }
         
         public void SendArray(string name, string message, int numberOfRequest)
